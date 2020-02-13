@@ -1,0 +1,151 @@
+Instalar Ubuntu-16.04 da windows store
+Abrir bash do ubuntu escolher nome do user e password
+Terminar wsl usando
+wsl --shutdown
+Converter versao wsl para wsl 2
+wsl --set-version Ubuntu-16.04 2
+
+
+Dentro do wsl
+nano ~/.wsl2hosts
+e colocar:
+host.docker.internal 
+(podemos adicionar outros dominios dos projetos que iremos ter a correr) 
+
+sudo apt-get remove docker docker-engine docker.io containerd runc
+
+# Update the source listing
+$ sudo apt-get update
+# Ensure that you have the binaries needed to fetch repo listing
+$ sudo apt-get install apt-transport-https ca-certificates curl gnupg2 software-properties-common
+# Fetch the repository listing from docker's site & add it
+$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+$ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+# Update source listing now that we've added Docker's repo
+$ sudo apt-get update
+
+sudo apt-get install docker-ce=17.09.0~ce-0~ubuntu
+
+sudo usermod -aG docker $USER
+
+create --> $ sudo nano /usr/local/sbin/start_docker.sh
+with the following contents…
+#!/usr/bin/env bash
+sudo cgroupfs-mount
+sudo service docker start
+
+
+
+$ sudo chmod +x /usr/local/sbin/start_docker.sh
+# Lock down edit privileges
+$ sudo chmod 755 /usr/local/sbin/start_docker.sh
+$ /bin/sh /usr/local/sbin/start_docker.sh
+
+
+$ sudo nano /etc/sudoers
+And add the following to the bottom of the file — making sure to put in your own username (use echo $USER if you’re unsure what it is):
+# Enable docker services to start without sudo
+<your username here> ALL=(ALL:ALL) NOPASSWD: /bin/sh /usr/local/sbin/start_docker.sh
+
+
+
+REINICIAR A BASH
+
+sudo service docker stop
+sudo nohup docker daemon -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock &
+sudo service docker start
+docker run --rm hello-world
+
+
+Se fizermos docker ps já deverá estar a responder.
+
+
+git clone repo laradock
+git config --global user.name "Stephane Soares"
+git config --global user.email stephanesoares11@gmail.com
+
+Instalar composer
+sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+
+ARRANCAR SERVIDOR
+docker-compose up -d nginx mysql phpmyadmin portainer
+
+INSTALAR SERVICO
+https://github.com/shayne/go-wsl2-host/releases
+
+
+adicionar comandos ao ~/.bashrc
+#comandos laradock csw
+alias server-start="cd ~/Workspace/laradock/; docker-compose up -d nginx mysql phpmyadmin portainer; ./php-fpm/xdebug start"
+alias server-stop="cd ~/Workspace/laradock/; ./php-fpm/xdebug stop; docker-compose down"
+alias server-restart="cd ~/Workspace/laradock/; ./php-fpm/xdebug stop; docker-compose down; docker-compose up -d nginx mysql phpmyadmin portainer; ./php-fpm/xdebug start"
+
+
+
+
+Comandos Extra XDEBUG 
+laradock $ ./php-fpm/xdebug start
+laradock $ ./php-fpm/xdebug stop
+laradock $ ./php-fpm/xdebug status
+
+
+PARA ADICIONAR NOVO DEV
+docker container exec -it laradock_workspace_1 bash
+Use o composer no workspace para criar um projeto Laravel: ///// ou criar fazendo push de um repositorio
+# composer create-project laravel/laravel meu-blog “5.4.*”
+Configure as permissões das pastas storage e bootstrap/cache:
+# cd meu-blog
+# chmod -R 755 storage bootstrap/cache
+
+
+
+Saia do bash e configure o dono da pasta do projeto. No exemplo a seguir, thiago é o nome do meu usuário na máquina host:
+$ sudo chown -R thiago:www-data meu-blog/
+
+// na máquina host
+$ cd ~/Workspace/laradock/nginx/sites/
+$ cp laravel.conf.example meu-blog.conf
+
+nano meu-blog.conf
+// meu-blog.conf
+server {
+listen 80;
+    listen [::]:80;
+server_name meu-blog.test;
+    root /var/www/meu-blog/public;
+    index index.php index.html index.htm;
+...
+
+
+$ cd ~/Workspace/laradock/
+$ docker-compose restart
+
+
+$ sudo nano /etc/hosts
+// arquivo /etc/hosts
+...
+127.0.1.1       meu-blog.test
+
+
+deve ser adicionado o meu-blog.test ao ficheiro ~/.wsl2hosts
+
+
+
+
+### ajudas ###
+phpmyadmin
+localhost:8080
+server: laradock_mysql_1
+user: root
+pass: root
+
+
+portainer: localhost:9010
+user e pass a configurar
+
+
+# Caso seja necessario dar rebuild geral
+docker-compose up --build -d mysql phpmyadmin nginx portainer
+
+
