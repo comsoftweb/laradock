@@ -94,8 +94,8 @@ git config --global user.email "put@youremail.there"
 sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 
-# go ~/Workspace/laradock
-docker-compose up -d nginx mysql phpmyadmin portainer
+# go ~/Workspace/laradock and start laradock
+cd ~/Workspace/laradock; docker-compose up -d nginx mysql phpmyadmin portainer
 
 This is start containers that we need. Will take some time.... 
 If you dont have watchguard works better ;)
