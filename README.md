@@ -15,25 +15,25 @@ Dev Enviroment - Laradock running at WSL2 + XDebug
 **Important** If you perform any windows update you must reinstall the service and reconfigure it.
 
 Font: https://github.com/shayne/go-wsl2-host/releases
-## Ubuntu 16.04
-Install and Configuration of Ubuntu 16.04
+## Ubuntu
+Install and Configuration of Ubuntu
 ```bash
-- Install Ubuntu 16.04 from Windows Store
+- Install Ubuntu from Windows Store
 - After install is complete, open that and fill user and password for your account
 # Command in powershell
     ### Turn off Ubuntu ###
     $ wsl --shutdown
     ### Convert wsl into wsl2 ###
-    $ wsl --set-version Ubuntu-16.04 2
+    $ wsl --set-version Ubuntu 2
     
 # After this process end you must open again and run next steps
 ```
-Inside of Ubuntu 16.04
+Inside of Ubuntu
 ```bash
 # Create file for service WSL2 Hosts ( This sync your domains.local into windows hosts file )
 $ nano ~/.wsl2hosts
     # Content of file
-        host.docker.internal laradock_mysql_1 mysql ubuntu1604.wsl
+        host.docker.internal laradock_mysql_1 mysql ubuntu.wsl
 
 # Remove old instalations
 $ sudo apt-get remove docker docker-engine docker.io containerd runc
@@ -179,8 +179,8 @@ $ cd ~/Workspace/laradock; docker-compose up --build -d mysql phpmyadmin nginx p
 ```
 
 Tools:
-- <a href="http://ubuntu1604.wsl:8080/index.php">phpMyAdmin</a>
-- <a href="http://ubuntu1604.wsl:9010/">Portainer</a>
+- <a href="http://ubuntu.wsl:8080/index.php">phpMyAdmin</a>
+- <a href="http://ubuntu.wsl:9010/">Portainer</a>
 
 ## Testing
 ```bash
