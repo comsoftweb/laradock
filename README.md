@@ -120,6 +120,7 @@ $ server-start # start your containers
 $ server-restart # restart your containers
 $ server-stop # stop all containers
 $ server-bash # bash of container php-fpm
+$ server-reload # when we add a new configuration file to nginx (or run server-restart)
 ```
 If you need can add new commands at your file .bashrc
 # Setup new Projects
