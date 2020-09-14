@@ -1,5 +1,3 @@
-[grd_count user="stephanesoares" repo="laradock"]
-
 # Laradock and WSL2
 
 ---
