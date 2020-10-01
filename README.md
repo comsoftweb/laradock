@@ -22,9 +22,9 @@ Install and Configuration of Ubuntu
 - After install is complete, open that and fill user and password for your account
 # Command in powershell
     ### Turn off Ubuntu ###
-    $ wsl --shutdown
+    wsl --shutdown
     ### Convert wsl into wsl2 ###
-    $ wsl --set-version Ubuntu 2
+    wsl --set-version Ubuntu 2
     
 # After this process end you must open again and run next steps
 ```
@@ -36,55 +36,55 @@ $ nano ~/.wsl2hosts
         host.docker.internal laradock_mysql_1 mysql ubuntu.wsl
 
 # Remove old instalations
-$ sudo apt-get remove docker docker-engine docker.io containerd runc
+sudo apt-get remove docker docker-engine docker.io containerd runc
 # Update the source listing
-$ sudo apt-get update
+sudo apt-get update
 # Ensure that you have the binaries needed to fetch repo listing
-$ sudo apt-get install apt-transport-https ca-certificates curl gnupg2 software-properties-common
+sudo apt-get install apt-transport-https ca-certificates curl gnupg2 software-properties-common
 # Fetch the repository listing from docker's site & add it
-$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-$ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 # Update source listing now that we've added Docker's repo
-$ sudo apt-get update
+sudo apt-get update
 # Install docker-ce
 sudo apt-get install docker-ce=17.09.0~ce-0~ubuntu
 # Add your user to docker group
 sudo usermod -aG docker $USER
 # Create scripts for docker start
-$ sudo nano /usr/local/sbin/start_docker.sh
+sudo nano /usr/local/sbin/start_docker.sh
     with the following contents:
         #!/usr/bin/env bash
         sudo cgroupfs-mount
         sudo service docker start
 
 # Configure script permissions
-$ sudo chmod +x /usr/local/sbin/start_docker.sh
+sudo chmod +x /usr/local/sbin/start_docker.sh
 # Lock down edit privileges
-$ sudo chmod 755 /usr/local/sbin/start_docker.sh
-$ /bin/sh /usr/local/sbin/start_docker.sh
+sudo chmod 755 /usr/local/sbin/start_docker.sh
+/bin/sh /usr/local/sbin/start_docker.sh
 
-$ sudo nano /etc/sudoers
+sudo nano /etc/sudoers
 # And add the following to the bottom of the file — making sure to put in your own username (use echo $USER if you’re unsure what it is):
 # Enable docker services to start without sudo
 <your username here> ALL=(ALL:ALL) NOPASSWD: /bin/sh /usr/local/sbin/start_docker.sh
 
 # Now you must Reboot your bash or run this command
-$ source ~/.bashrc
+source ~/.bashrc
 
 # After this commands
-$ sudo service docker stop
-$ sudo nohup docker daemon -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock &
-$ sudo service docker start
-$ docker run --rm hello-world
+sudo service docker stop
+sudo nohup docker daemon -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock &
+sudo service docker start
+docker run --rm hello-world
 
 #If you see hello world thats ok. You can verify if your docker is running using this
-    $ docker ps
+    docker ps
 ```
 Now we will configure folders where you go work
 ```bash
-$ cd ~
-$ mkdir Workspace
-$ cd Workspace; git clone <url of repo with our laradock>
+cd ~
+mkdir Workspace
+cd Workspace; git clone <url of repo with our laradock>
 
 # Configure your git parameters
 git config --global user.name "Your Name"
@@ -98,7 +98,11 @@ sudo chmod +x /usr/local/bin/docker-compose
 cd ~/Workspace/laradock; docker-compose up -d nginx mysql phpmyadmin portainer
 
 This is start containers that we need. Will take some time.... 
-If you dont have watchguard works better ;)
+
+After, I advise you to run the following (force permissions)
+cd ~
+sudo chown -R username:www-data Workspace/
+
 ```
 ## Our Commands
 Edit your .bashrc using 
@@ -116,11 +120,11 @@ alias server-reload="cd ~/Workspace/laradock/; docker-compose exec nginx nginx -
 ```
 With this commands you can start, restart and turn off containers and docker.
 ```bash
-$ server-start # start your containers
-$ server-restart # restart your containers
-$ server-stop # stop all containers
-$ server-bash # bash of container php-fpm
-$ server-reload # when we add a new configuration file to nginx (or run server-restart)
+server-start # start your containers
+server-restart # restart your containers
+server-stop # stop all containers
+server-bash # bash of container php-fpm
+server-reload # when we add a new configuration file to nginx (or run server-restart)
 ```
 If you need can add new commands at your file .bashrc
 # Setup new Projects
@@ -141,7 +145,7 @@ Add your domain into ~/.wsl2hosts ( Add new domains always at first line of file
 
 - Reload system using 
 ```bash
-$ server-reload
+server-reload
 ```
 
 Now you can navigate with your browser http://yourdomain.local 
@@ -150,7 +154,7 @@ If you have problems
 
 #### Rebuild container images
 ```bash
-$ cd ~/Workspace/laradock; docker-compose up --build -d mysql phpmyadmin nginx portainer
+cd ~/Workspace/laradock; docker-compose up --build -d mysql phpmyadmin nginx portainer
 ```
 ### **Notes:**
 
@@ -184,7 +188,7 @@ Tools:
 
 ## Testing
 ```bash
-$ docker ps # if you see containers running after (server-start) your process is complete.
+docker ps # if you see containers running after (server-start) your process is complete.
 ```
 ## Security
 If you discover any security related issues, please email the [author](stephanesoares11@gmail.com) instead of using the issue tracker.
