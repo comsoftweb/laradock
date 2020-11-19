@@ -47,7 +47,7 @@ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubun
 # Update source listing now that we've added Docker's repo
 sudo apt-get update
 # Install docker-ce
-sudo apt-get install docker-ce=17.09.0~ce-0~ubuntu
+sudo apt-get install docker-ce
 # Add your user to docker group
 sudo usermod -aG docker $USER
 # Create scripts for docker start
@@ -112,9 +112,9 @@ $ sudo nano ~/.bashrc
 Add this content at end of file
 ```bash
 #laradock comands custom
-alias server-start="sudo service docker start; cd ~/Workspace/laradock/; docker-compose up -d nginx mysql phpmyadmin portainer; ./php-fpm/xdebug start"
+alias server-start="sudo service docker start; cd ~/Workspace/laradock/; docker-compose up -d apache2 nginx mysql phpmyadmin portainer; ./php-fpm/xdebug start"
 alias server-stop="cd ~/Workspace/laradock/; ./php-fpm/xdebug stop; docker-compose down"
-alias server-restart="cd ~/Workspace/laradock/; ./php-fpm/xdebug stop; docker-compose down; docker-compose up -d nginx mysql phpmyadmin portainer; ./php-fpm/xdebug start"
+alias server-restart="cd ~/Workspace/laradock/; ./php-fpm/xdebug stop; docker-compose down; docker-compose up -d apache2 nginx mysql phpmyadmin portainer; ./php-fpm/xdebug start"
 alias server-bash="docker container exec -it laradock_workspace_1 bash"
 alias server-reload="cd ~/Workspace/laradock/; docker-compose exec nginx nginx -s reload"
 ```
@@ -138,8 +138,8 @@ Example:
     myproject1/
     myproject2/
 ```
-Next, you need create a conf file at nginx
-~/Workspace/laradock/nginx/sites
+Next, you need create a conf file at nginx / apache2
+~/Workspace/laradock/nginx/sites OR ~Workspace/laradock/apache2/sites
 
 Add your domain into ~/.wsl2hosts ( Add new domains always at first line of file)
 
