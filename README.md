@@ -112,19 +112,25 @@ $ sudo nano ~/.bashrc
 Add this content at end of file
 ```bash
 #laradock comands custom
-alias server-start="sudo service docker start; cd ~/Workspace/laradock/; docker-compose up -d apache2 nginx mysql phpmyadmin portainer; ./php-fpm/xdebug start"
 alias server-stop="cd ~/Workspace/laradock/; ./php-fpm/xdebug stop; docker-compose down"
-alias server-restart="cd ~/Workspace/laradock/; ./php-fpm/xdebug stop; docker-compose down; docker-compose up -d apache2 nginx mysql phpmyadmin portainer; ./php-fpm/xdebug start"
+
+alias apache-start="sudo service docker start; cd ~/Workspace/laradock/; docker-compose up -d apache2 mysql phpmyadmin portainer; ./php-fpm/xdebug start"
+alias apache-restart="cd ~/Workspace/laradock/; ./php-fpm/xdebug stop; docker-compose down; docker-compose up -d apache2 mysql phpmyadmin portainer; ./php-fpm/xdebug start"
+alias nginx-start="sudo service docker start; cd ~/Workspace/laradock/; docker-compose up -d nginx mysql phpmyadmin portainer; ./php-fpm/xdebug start"
+alias nginx-restart="cd ~/Workspace/laradock/; ./php-fpm/xdebug stop; docker-compose down; docker-compose up -d nginx mysql phpmyadmin portainer; ./php-fpm/xdebug start"
+alias nginx-reload="cd ~/Workspace/laradock/; docker-compose exec nginx nginx -s reload"
 alias server-bash="docker container exec -it laradock_workspace_1 bash"
-alias server-reload="cd ~/Workspace/laradock/; docker-compose exec nginx nginx -s reload"
+
 ```
 With this commands you can start, restart and turn off containers and docker.
 ```bash
-server-start # start your containers
-server-restart # restart your containers
+apache-start # start your containers apache environment
+nginx-start # start your containers nginx environment
+apache-restart # restart your containers apache environment
+nginx-restart # restart your containers nginx environment
 server-stop # stop all containers
 server-bash # bash of container php-fpm
-server-reload # when we add a new configuration file to nginx (or run server-restart)
+nginx-reload # when we add a new configuration file to nginx (or run nginx-restart)
 ```
 If you need can add new commands at your file .bashrc
 # Setup new Projects
