@@ -174,9 +174,9 @@ cd ~/Workspace/laradock; docker-compose up --build -d mysql phpmyadmin nginx por
             "pathMappings": {
                 "/var/www/yourprojectfolder": "${workspaceRoot}",
                 },
-            "xdebugSettings": {
+            /* "xdebugSettings": {
                 "max_data": -1
-            }
+            } */
         }
     ]
 }
