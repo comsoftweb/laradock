@@ -162,7 +162,7 @@ cd ~/Workspace/laradock; docker-compose up --build -d mysql phpmyadmin nginx por
             "name": "Listen for XDebug",
             "type": "php",
             "request": "launch",
-            "port": 9003,
+            "port": 9000,
             "pathMappings": {
                 "/var/www/yourprojectfolder": "${workspaceRoot}",
                 },
