@@ -102,11 +102,12 @@ Add this content at end of file
 #laradock comands custom
 alias server-stop="cd ~/Workspace/laradock/; ./php-fpm/xdebug stop; docker-compose down"
 alias apache-start="sudo service docker start; cd ~/Workspace/laradock/; docker-compose up -d apache2 mysql phpmyadmin portainer; ./php-fpm/xdebug start"
-alias apache-restart="cd ~/Workspace/laradock/; ./php-fpm/xdebug stop; docker-compose down; docker-compose up -d apache2 mysql phpmyadmin portainer; ./php-fpm/xdebug start"
+alias apache-restart="cd ~/Workspace/laradock/; ./php-fpm/xdebug stop; docker-compose down; docker-compose up -d apache2 mysql phpmyadmin portainer; ./php-fpm/xdebug star>
 alias nginx-start="sudo service docker start; cd ~/Workspace/laradock/; docker-compose up -d nginx mysql phpmyadmin portainer; ./php-fpm/xdebug start"
 alias nginx-restart="cd ~/Workspace/laradock/; ./php-fpm/xdebug stop; docker-compose down; docker-compose up -d nginx mysql phpmyadmin portainer; ./php-fpm/xdebug start"
 alias nginx-reload="cd ~/Workspace/laradock/; docker-compose exec nginx nginx -s reload"
 alias server-bash="docker container exec -it laradock_workspace_1 bash"
+alias cron-start="cd ~/Workspace/laradock/; docker-compose up -d php-worker"
 ```
 With this commands you can start, restart and turn off containers and docker.
 ```bash
@@ -117,6 +118,7 @@ nginx-restart # restart your containers nginx environment
 server-stop # stop all containers
 server-bash # bash of container php-fpm
 nginx-reload # when we add a new configuration file to nginx (or run nginx-restart)
+cron-start # run php-worker container
 ```
 If you need can add new commands at your file .bashrc
 # Setup new Projects
